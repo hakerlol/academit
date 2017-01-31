@@ -11,8 +11,7 @@ public class Range {
         this.to = to;
     }
 
-    public double getLength()
-    {
+    public double getLength() {
         return (to - from);
     }
 
@@ -21,8 +20,7 @@ public class Range {
         return number - from >= EPSILON && to - number >= EPSILON;
     }
 
-    public double getFrom()
-    {
+    public double getFrom() {
         return from;
     }
 
@@ -31,23 +29,51 @@ public class Range {
         return to;
     }
 
-    public Object getCross(double from, double to) {
+    public Range getCross(Range length) {
 
 
-        if ((from >= this.from && from <= this.to) && to > this.to) {
+        if ((length.from >= this.from && length.from < this.to) && length.to > this.to) {
+            return new Range(length.from, this.to);
 
-            return new Range(this.from, to);
+        } else if ((this.from >= length.from && this.from < length.to) && this.to > length.to) {
+            return new Range(this.from, length.to);
 
-        } else if ((this.from >= from && this.from <= to) && this.to > to) {
+        } else if (this.from >= length.from && this.to <= length.to) {
+            return new Range(this.from, this.to);
 
-            return new Range(from, this.to);
+        } else if (length.from > this.from && length.to < this.to) {
+            return new Range(length.from, length.to);
 
-        } else if ((this.from >= from && this.to <= to) || (from >= this.from && to <= this.to)) {
+        } else if (this.from == length.to) {
+            return new Range(this.from, length.to);
 
-            return new Range(from, to);
+        } else if (length.from == this.to) {
+            return new Range(length.from, this.to);
 
         } else {
             return null;
         }
     }
+
+    public Range getAssociation(Range length) {
+        if ((length.from >= this.from && length.from < this.to) && length.to > this.to) {
+            return new Range(this.from, length.to);
+
+        } else if ((this.from >= length.from && this.from < length.to) && this.to > length.to) {
+            return new Range(length.from, this.to);
+
+        } else if (this.from >= length.from && this.to <= length.to) {
+            return new Range(length.from, length.to);
+
+        } else if (length.from > this.from && length.to < this.to) {
+            return new Range(this.from, this.to);
+        }
+        else {
+            return null;
+        }
+    }
+
+   /* public Range getDifference(Range length){
+        
+    }*/
 }
