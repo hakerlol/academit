@@ -1,10 +1,8 @@
 package nsk.academit.feller;
 
-
 public class Range {
     private double from;
     private double to;
-    private static final double EPSILON = 1.0e-10;
 
     public Range(double from, double to) {
         this.from = from;
@@ -17,10 +15,11 @@ public class Range {
 
     public boolean isInside(double number) {
 
-        return number - from >= EPSILON && to - number >= EPSILON;
+        return number - from >= 0 && to - number >= 0;
     }
 
     public double getFrom() {
+
         return from;
     }
 
@@ -29,51 +28,48 @@ public class Range {
         return to;
     }
 
-    public Range getCross(Range length) {
+    public boolean checkIntersection(Range range) {
+        return (range.from >= this.from && range.from <= this.to) || (this.from >= range.from && this.from <= range.to);
+    }
 
-
-        if ((length.from >= this.from && length.from < this.to) && length.to > this.to) {
-            return new Range(length.from, this.to);
-
-        } else if ((this.from >= length.from && this.from < length.to) && this.to > length.to) {
-            return new Range(this.from, length.to);
-
-        } else if (this.from >= length.from && this.to <= length.to) {
-            return new Range(this.from, this.to);
-
-        } else if (length.from > this.from && length.to < this.to) {
-            return new Range(length.from, length.to);
-
-        } else if (this.from == length.to) {
-            return new Range(this.from, length.to);
-
-        } else if (length.from == this.to) {
-            return new Range(length.from, this.to);
+    public Range getIntersection(Range range) {
+        if (checkIntersection(range)) {
+            return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
 
         } else {
             return null;
         }
     }
 
-    public Range getAssociation(Range length) {
-        if ((length.from >= this.from && length.from < this.to) && length.to > this.to) {
-            return new Range(this.from, length.to);
+    public Range[] getUnion(Range range) {
+        if (checkIntersection(range)) {
+            Range[] array = new Range[1];
+            array[0] = new Range(Math.min(this.from, range.from), Math.max(this.to, range.to));
+            return array;
 
-        } else if ((this.from >= length.from && this.from < length.to) && this.to > length.to) {
-            return new Range(length.from, this.to);
-
-        } else if (this.from >= length.from && this.to <= length.to) {
-            return new Range(length.from, length.to);
-
-        } else if (length.from > this.from && length.to < this.to) {
-            return new Range(this.from, this.to);
+        } else {
+            Range[] array = new Range[2];
+            array[0] = new Range(Math.min(this.from, range.from), Math.min(this.to, range.to));
+            array[1] = new Range(Math.max(this.from, range.from), Math.max(this.to, range.to));
+            return array;
         }
-        else {
-            return null;
-        }
+
     }
 
-   /* public Range getDifference(Range length){
-        
-    }*/
+    public Range[] getDifference(Range range) {
+        if (checkIntersection(range)) {
+            Range[] array = new Range[2];
+            array[0] = new Range(Math.min(this.from, range.from), Math.max(this.from, range.from));
+            array[1] = new Range(Math.min(this.to, range.to), Math.max(this.to, range.to));
+            return array;
+
+        } else {
+            Range[] array = new Range[2];
+            array[0] = new Range(Math.min(this.from, range.from), Math.min(this.to, range.to));
+            array[1] = new Range(Math.max(this.from, range.from), Math.max(this.to, range.to));
+            return array;
+        }
+    }
 }
+
+
