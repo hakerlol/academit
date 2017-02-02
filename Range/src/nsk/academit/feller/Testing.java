@@ -8,16 +8,27 @@ public class Testing {
         Scanner scanner = new Scanner(System.in);
         scanner.useLocale(Locale.US);
 
-        Range length = new Range(-6.6, 7.4);
-        Range length1 = new Range(-3, 9);
+        Range range = new Range(-6.6, 7.4);
+        Range range1 = new Range(8, 10);
 
-      /*  System.out.println("Enter real number:");
+        System.out.println("Enter real number:");
         double number = scanner.nextDouble();
 
-        System.out.printf("From: %f To: %f%nInterval is %f%nNumber is in interval: %s%n", length.getFrom(), length.getTo(), length.getLength(), length.isInside(number));
-        System.out.printf("From: %f To: %f%nInterval is %f%nNumber is in interval: %s%n", length1.getFrom(), length1.getTo(), length1.getLength(), length1.isInside(number));*/
+        System.out.printf("From: %f To: %f%nInterval is %f%nNumber is in interval: %s%n", range.getFrom(), range.getTo(), range.getLength(), range.isInside(number));
+        System.out.printf("From: %f To: %f%nInterval is %f%nNumber is in interval: %s%n", range1.getFrom(), range1.getTo(), range1.getLength(), range1.isInside(number));
 
-        System.out.printf("New cross interval is: From %f To %f%n", length.getCross(length1).getFrom(), length.getCross(length1).getTo());
-        System.out.printf("New association interval is: From %f To %f", length.getAssociation(length1).getFrom(), length.getAssociation(length1).getTo());
+        if (range.getIntersection(range1) == null) {
+            System.out.println("There is no intersection");
+        } else {
+            System.out.printf("Intersection interval is: From %f To %f%n", range.getIntersection(range1).getFrom(), range.getIntersection(range1).getTo());
+        }
+
+        for (int i = 0; i < range.getUnion(range1).length; i++) {
+            System.out.printf("Union interval number %d: %f %f%n", i + 1, range.getUnion(range1)[i].getFrom(), range.getUnion(range1)[i].getTo());
+        }
+
+        for (int i = 0; i < range.getDifference(range1).length; i++) {
+            System.out.printf("Difference interval number %d: %f %f%n", i + 1, range.getDifference(range1)[i].getFrom(), range.getDifference(range1)[i].getTo());
+        }
     }
 }
