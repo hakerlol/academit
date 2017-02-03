@@ -9,7 +9,7 @@ public class Testing {
         scanner.useLocale(Locale.US);
 
         Range range = new Range(-6.6, 7.4);
-        Range range1 = new Range(-6.6, 2);
+        Range range1 = new Range(-8, -7);
 
         System.out.println("Enter real number:");
         double number = scanner.nextDouble();
