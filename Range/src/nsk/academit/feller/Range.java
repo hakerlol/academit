@@ -44,42 +44,30 @@ public class Range {
     public Range[] getUnion(Range range) {
         if (checkIntersection(range)) {
 
-            Range[] array;
-            array = new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
-            return array;
-
+            return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
         } else {
-            Range[] array;
-            array = new Range[]{new Range(Math.min(this.from, range.from), Math.min(this.to, range.to)), new Range(Math.max(this.from, range.from), Math.max(this.to, range.to))};
-            return array;
+            return new Range[]{new Range(Math.min(this.from, range.from), Math.min(this.to, range.to)), new Range(Math.max(this.from, range.from), Math.max(this.to, range.to))};
         }
 
     }
 
     public Range[] getDifference(Range range) {
         if (checkIntersection(range)) {
-            if (range.to < this.to && range.from > this.from) {
-                Range[] array;
-                array = new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
-                return array;
-            } else if (range.to > this.from && range.to < this.to && range.from < this.from) {
-                Range[] array;
-                array = new Range[]{new Range(range.to, this.to)};
-                return array;
-            } else if (range.from < this.to && range.from > this.from) {
-                Range[] array;
-                array = new Range[]{new Range(this.from, range.from)};
-                return array;
+            if (range.to <= this.to && range.from >= this.from) {
+                return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
+
+            } else if (range.to >= this.from && range.to <= this.to && range.from <= this.from) {
+                return new Range[]{new Range(range.to, this.to)};
+
+            } else if (range.from <= this.to && range.from >= this.from) {
+                return new Range[]{new Range(this.from, range.from)};
+
             } else {
-                Range[] array;
-                array = new Range[]{new Range(0, 0)};
-                return array;
+                return new Range[0];
             }
 
         } else {
-            Range[] array;
-            array = new Range[]{new Range(this.from, this.to)};
-            return array;
+            return new Range[]{new Range(this.from, this.to)};
         }
     }
 }

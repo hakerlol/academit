@@ -9,7 +9,7 @@ public class Testing {
         scanner.useLocale(Locale.US);
 
         Range range = new Range(-6.6, 7.4);
-        Range range1 = new Range(8, 10);
+        Range range1 = new Range(-6.6, 2);
 
         System.out.println("Enter real number:");
         double number = scanner.nextDouble();
@@ -27,8 +27,12 @@ public class Testing {
             System.out.printf("Union interval number %d: %f %f%n", i + 1, range.getUnion(range1)[i].getFrom(), range.getUnion(range1)[i].getTo());
         }
 
-        for (int i = 0; i < range.getDifference(range1).length; i++) {
-            System.out.printf("Difference interval number %d: %f %f%n", i + 1, range.getDifference(range1)[i].getFrom(), range.getDifference(range1)[i].getTo());
+        if (range.getDifference(range1).length == 0) {
+            System.out.println("Difference interval is empty");
+        } else {
+            for (int i = 0; i < range.getDifference(range1).length; i++) {
+                System.out.printf("Difference interval number %d: %f %f%n", i + 1, range.getDifference(range1)[i].getFrom(), range.getDifference(range1)[i].getTo());
+            }
         }
     }
 }
