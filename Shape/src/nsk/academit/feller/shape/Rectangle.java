@@ -1,6 +1,6 @@
 package nsk.academit.feller.shape;
 
-public class Rectangle extends Shape {
+public class Rectangle implements Shape {
     private double height;
     private double width;
 
@@ -30,7 +30,9 @@ public class Rectangle extends Shape {
 
     @Override
     public String toString() {
-        return null;
+
+        return "Rectangle" + "height = " + height + ", width = " +
+                width + " Area = " + getArea() + " Perimeter = " + getPerimeter();
     }
 
     @Override

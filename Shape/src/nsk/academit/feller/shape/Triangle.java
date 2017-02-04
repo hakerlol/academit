@@ -1,6 +1,6 @@
 package nsk.academit.feller.shape;
 
-public class Triangle extends Shape {
+public class Triangle implements Shape {
     private double x1;
     private double y1;
     private double x2;
@@ -17,6 +17,11 @@ public class Triangle extends Shape {
         this.y3 = y3;
     }
 
+    public double getSegment(double coorX1, double coorX2, double coorY1, double coorY2) {
+
+        return Math.sqrt(Math.pow(coorX2 - coorX1, 2) + Math.pow(coorY2 - coorY1, 2));
+    }
+
     public double getWidth() {
 
         return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
@@ -31,12 +36,15 @@ public class Triangle extends Shape {
     }
 
     public double getPerimeter() {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) + Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2)) + Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
+
+        return getSegment(x1, x2, y1, y2) + getSegment(x1, x3, y1, y3) + getSegment(x2, x3, y2, y3);
     }
 
     @Override
     public String toString() {
-        return null;
+        return "Triangle " + "coordinates: x1 = " + x1 + " y1 = " + y1
+                + " x2 = " + x2 + " y2 = " + y2 + " x3 = " + x3 +
+                " y3 = " + y3 + " Area = " + getArea() + " Perimeter = " + getPerimeter();
     }
 
     @Override

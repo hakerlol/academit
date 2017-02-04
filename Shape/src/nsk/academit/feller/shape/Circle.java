@@ -1,7 +1,7 @@
 package nsk.academit.feller.shape;
 
 
-public class Circle extends Shape {
+public class Circle implements Shape {
     private double radius;
 
     public Circle(double radius) {
@@ -29,7 +29,8 @@ public class Circle extends Shape {
 
     @Override
     public String toString() {
-        return null;
+        return "Circle " + "radius = " +
+                radius + " Area = " + getArea() + " Perimeter = " + getPerimeter();
     }
 
     @Override

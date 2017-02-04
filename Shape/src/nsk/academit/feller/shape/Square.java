@@ -1,6 +1,6 @@
 package nsk.academit.feller.shape;
 
-public class Square extends Shape {
+public class Square implements Shape {
     private double side;
 
     public Square(double side) {
@@ -26,7 +26,7 @@ public class Square extends Shape {
 
     @Override
     public String toString() {
-        return null;
+        return "Square " + "side = " + side + "Area = " + getArea() + " Perimeter = " + getPerimeter();
     }
 
     @Override
