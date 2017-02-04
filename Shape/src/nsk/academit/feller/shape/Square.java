@@ -50,9 +50,7 @@ public class Square implements Shape {
             return false;
         }
         Square other = (Square) obj;
-        if (side != other.side) {
-            return false;
-        }
-        return true;
+
+        return !(side != other.side);
     }
 }

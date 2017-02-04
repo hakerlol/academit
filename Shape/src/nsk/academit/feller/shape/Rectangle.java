@@ -56,12 +56,7 @@ public class Rectangle implements Shape {
             return false;
         }
         Rectangle other = (Rectangle) obj;
-        if (width != other.width) {
-            return false;
-        }
-        if (height != other.height) {
-            return false;
-        }
-        return true;
+
+        return !(width != other.width) && !(height != other.height);
     }
 }
