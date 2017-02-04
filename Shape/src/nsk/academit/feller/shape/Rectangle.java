@@ -37,11 +37,31 @@ public class Rectangle implements Shape {
 
     @Override
     public int hashCode() {
-        return 0;
+        final int prime = 37;
+        int result = 1;
+        result = prime * result + (int) width;
+        result = prime * result + (int) height;
+        return result;
     }
 
     @Override
-    public boolean equals(Object x) {
-        return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Rectangle other = (Rectangle) obj;
+        if (width != other.width) {
+            return false;
+        }
+        if (height != other.height) {
+            return false;
+        }
+        return true;
     }
 }

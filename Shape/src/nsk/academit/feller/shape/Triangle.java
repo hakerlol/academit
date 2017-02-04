@@ -17,7 +17,7 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
-    public double getSegment(double coorX1, double coorX2, double coorY1, double coorY2) {
+    private static double getSegment(double coorX1, double coorX2, double coorY1, double coorY2) {
 
         return Math.sqrt(Math.pow(coorX2 - coorX1, 2) + Math.pow(coorY2 - coorY1, 2));
     }
@@ -49,11 +49,47 @@ public class Triangle implements Shape {
 
     @Override
     public int hashCode() {
-        return 0;
+        final int prime = 37;
+        int result = 1;
+        result = prime * result + (int) x1;
+        result = prime * result + (int) y1;
+        result = prime * result + (int) x2;
+        result = prime * result + (int) y2;
+        result = prime * result + (int) x3;
+        result = prime * result + (int) y3;
+        return result;
     }
 
     @Override
-    public boolean equals(Object x) {
-        return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Triangle other = (Triangle) obj;
+        if (x1 != other.x1) {
+            return false;
+        }
+        if (y1 != other.y1) {
+            return false;
+        }
+        if (x2 != other.x2) {
+            return false;
+        }
+        if (y2 != other.y2) {
+            return false;
+        }
+        if (x3 != other.x3) {
+            return false;
+        }
+        if (y3 != other.y3) {
+            return false;
+        }
+        return true;
     }
 }

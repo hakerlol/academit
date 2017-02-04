@@ -1,6 +1,5 @@
 package nsk.academit.feller.shape;
 
-
 public class Circle implements Shape {
     private double radius;
 
@@ -35,11 +34,27 @@ public class Circle implements Shape {
 
     @Override
     public int hashCode() {
-        return 0;
+        final int prime = 37;
+        int result = 1;
+        result = prime * result + (int) radius;
+        return result;
     }
 
     @Override
-    public boolean equals(Object x) {
-        return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Circle other = (Circle) obj;
+        if (radius != other.radius) {
+            return false;
+        }
+        return true;
     }
 }

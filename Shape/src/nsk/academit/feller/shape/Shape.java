@@ -2,11 +2,11 @@ package nsk.academit.feller.shape;
 
 public interface Shape {
 
-    public double getWidth();
+    double getWidth();
 
-    public double getHeight();
+    double getHeight();
 
-    public double getArea();
+    double getArea();
 
-    public double getPerimeter();
+    double getPerimeter();
 }
