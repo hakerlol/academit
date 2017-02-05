@@ -73,6 +73,6 @@ public class Triangle implements Shape {
         }
         Triangle other = (Triangle) obj;
 
-        return !(x1 != other.x1) && !(y1 != other.y1) && !(x2 != other.x2) && !(y2 != other.y2) && !(x3 != other.x3) && !(y3 != other.y3);
+        return x1 == other.x1 && y1 == other.y1 && x2 == other.x2 && y2 == other.y2 && x3 == other.x3 && y3 == other.y3;
     }
 }

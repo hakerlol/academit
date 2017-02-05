@@ -51,6 +51,6 @@ public class Square implements Shape {
         }
         Square other = (Square) obj;
 
-        return !(side != other.side);
+        return side == other.side;
     }
 }

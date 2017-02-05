@@ -43,6 +43,6 @@ public class TestShape {
 
         System.out.println("Max area  " + getMaxSquare(square1, square2, rectangle1, rectangle2, circle1, circle2, triangle1, triangle2));
         System.out.println("Second perimeter is " + getSecondPerimeter(square1, square2, rectangle1, rectangle2, circle1, circle2, triangle1, triangle2));
-
+        System.out.println("blabla");
     }
 }

@@ -53,6 +53,6 @@ public class Circle implements Shape {
         }
         Circle other = (Circle) obj;
 
-        return !(radius != other.radius);
+        return radius == other.radius;
     }
 }
