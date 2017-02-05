@@ -10,6 +10,7 @@ public class Range {
     }
 
     public double getLength() {
+
         return (to - from);
     }
 
@@ -24,7 +25,6 @@ public class Range {
     }
 
     public double getTo() {
-
         return to;
     }
 
