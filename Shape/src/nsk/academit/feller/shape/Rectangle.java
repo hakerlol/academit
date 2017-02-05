@@ -58,5 +58,6 @@ public class Rectangle implements Shape {
         Rectangle other = (Rectangle) obj;
 
         return width == other.width && height == other.height;
+        
     }
 }
