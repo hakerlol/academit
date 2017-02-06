@@ -8,6 +8,7 @@ public class Main {
         Vector vector = new Vector(1);
         double [] array = new double[]{1,2,3,4};
         Vector vector1 = new Vector(array);
-        System.out.println(vector.getSize());
+        System.out.println(vector1.getSize());
+        System.out.println(vector);
     }
 }

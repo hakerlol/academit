@@ -31,7 +31,7 @@ public class Rectangle implements Shape {
     @Override
     public String toString() {
 
-        return "Rectangle" + "height = " + height + ", width = " +
+        return "Rectangle height = " + height + ", width = " +
                 width + " Area = " + getArea() + " Perimeter = " + getPerimeter();
     }
 
@@ -58,6 +58,6 @@ public class Rectangle implements Shape {
         Rectangle other = (Rectangle) obj;
 
         return width == other.width && height == other.height;
-        
+
     }
 }

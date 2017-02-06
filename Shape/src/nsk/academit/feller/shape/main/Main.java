@@ -1,8 +1,10 @@
-package nsk.academit.feller.shape;
+package nsk.academit.feller.shape.main;
+
+import nsk.academit.feller.shape.*;
 
 import java.util.Arrays;
 
-public class TestShape {
+public class Main {
     public static Shape getMaxSquare(Shape... shapes) {
         double maxArea = 0;
         Shape shape = null;
@@ -23,9 +25,10 @@ public class TestShape {
         }
         Arrays.sort(array);
         Shape shape = null;
-        for (int i = 0; i < shapes.length; i++) {
-            if (shapes[i].getPerimeter() == array[shapes.length - 2]) {
-                shape = shapes[i];
+        for (Shape x : shapes) {
+            if (x.getPerimeter() == array[shapes.length - 2]) {
+                shape = x;
+                break;
             }
         }
         return shape;

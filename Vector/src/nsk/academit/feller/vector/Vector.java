@@ -40,4 +40,9 @@ public class Vector {
         return mass.length;
     }
 
+    @Override
+    public String toString() {
+
+        return null;
+    }
 }
