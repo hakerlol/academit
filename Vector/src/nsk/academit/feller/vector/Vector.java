@@ -13,13 +13,13 @@ public class Vector {
     }
 
     public Vector(Vector vector) {
-        elements = new double[vector.elements.length];
+        this(vector.elements.length);
         System.arraycopy(vector.elements, 0, this.elements, 0, vector.elements.length);
 
     }
 
     public Vector(double[] array) {
-        elements = new double[array.length];
+        this(array.length);
         System.arraycopy(array, 0, elements, 0, array.length);
     }
 
@@ -36,32 +36,57 @@ public class Vector {
         }
     }
 
-    public double[] getSum(Vector vector) {
-        for (int i = 0; i < this.elements.length; i++) {
-            elements[i] = (elements[i] + vector.elements[i]);
+    public Vector getSum(Vector vector) {
+        if (elements.length == vector.elements.length) {
+            for (int i = 0; i < this.elements.length; i++) {
+                elements[i] = (elements[i] + vector.elements[i]);
+            }
+            return this;
+        } else if (this.elements.length > vector.elements.length) {
+            vector = new Vector(this.elements.length, vector.elements);
+            for (int i = 0; i < this.elements.length; i++) {
+                elements[i] = (elements[i] + vector.elements[i]);
+            }
+        } else {
+            //надо дописать здесь
+            for (int i = 0; i < vector.elements.length; i++) {
+                this.elements[i] = (elements[i] + vector.elements[i]);
+            }
         }
-        return elements;
+        return this;
+
     }
 
-    public double[] getDifference(Vector vector) {
-        for (int i = 0; i < this.elements.length; i++) {
-            elements[i] = (elements[i] - vector.elements[i]);
+    public Vector getDifference(Vector vector) {
+        if (elements.length <= vector.elements.length) {
+            for (int i = 0; i < this.elements.length; i++) {
+                elements[i] = (elements[i] - vector.elements[i]);
+            }
+            return this;
+        } else if (this.elements.length > vector.elements.length) {
+            vector = new Vector(this.elements.length, vector.elements);
+            for (int i = 0; i < this.elements.length; i++) {
+                elements[i] = (elements[i] - vector.elements[i]);
+            }
+        } else {
+            //надо дописать здесь
+            for (int i = 0; i < this.elements.length; i++) {
+                elements[i] = (elements[i] + vector.elements[i]);
+            }
         }
-        return elements;
+        return this;
     }
 
-    public double[] calcScalar(double number) {
+    public Vector calcScalar(double number) {
         for (int i = 0; i < this.elements.length; i++) {
             elements[i] = (elements[i] * number);
         }
-        return elements;
+        return this;
     }
 
     public Vector reverse() {
-        for (int i = 0; i < this.elements.length; i++) {
-            this.elements[i] = this.elements[i] * (-1);
-        }
-        return new Vector(this.elements);
+        calcScalar(-1);
+        return this;
     }
 
     public double getLength() {
@@ -78,63 +103,44 @@ public class Vector {
 
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        if (vector1.elements.length == vector2.elements.length) {
-            double[] result = new double[vector1.elements.length];
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (vector1.elements[i] + vector2.elements[i]);
-
-            }
-            return new Vector(result);
-        } else {
-            double[] result = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
-            double[] newElements = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
-            System.arraycopy(vector1.elements.length < vector2.elements.length ? vector1.elements : vector2.elements, 0, newElements, 0,
-                    vector1.elements.length < vector2.elements.length ? vector1.elements.length : vector2.elements.length);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (newElements[i] + vector2.elements[i]);
-            }
-            return new Vector(result);
-        }
+        return new Vector(vector1).getSum(vector2);
     }
 
     public static Vector getDifference(Vector vector1, Vector vector2) {
-        if (vector1.elements.length == vector2.elements.length) {
-            double[] result = new double[vector1.elements.length];
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (vector1.elements[i] - vector2.elements[i]);
+        return new Vector(vector1).getDifference(vector2);
+    }
 
+    public static double getScalarMultiplication(Vector vector1, Vector vector2) {
+        if (vector1.elements.length == vector2.elements.length) {
+            double result = 0;
+            for (int i = 0; i < vector1.elements.length; i++) {
+                result += (vector1.elements[i] * vector2.elements[i]);
             }
-            return new Vector(result);
+            return result;
         } else {
-            double[] result = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
+            double result = 0;
             double[] newElements = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
             System.arraycopy(vector1.elements.length < vector2.elements.length ? vector1.elements : vector2.elements, 0, newElements, 0,
                     vector1.elements.length < vector2.elements.length ? vector1.elements.length : vector2.elements.length);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (newElements[i] - vector2.elements[i]);
+            for (int i = 0; i < newElements.length; i++) {
+                result += (newElements[i] * (vector1.elements.length > vector2.elements.length ? vector1.elements[i] : vector2.elements[i]));
             }
-            return new Vector(result);
+            return result;
         }
     }
 
-    public static Vector getScalarMultiplication(Vector vector1, Vector vector2) {
-        if (vector1.elements.length == vector2.elements.length) {
-            double[] result = new double[vector1.elements.length];
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (vector1.elements[i] * vector2.elements[i]);
-
-            }
-            return new Vector(result);
-        } else {
-            double[] result = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
-            double[] newElements = new double[vector1.elements.length > vector2.elements.length ? vector1.elements.length : vector2.elements.length];
-            System.arraycopy(vector1.elements.length < vector2.elements.length ? vector1.elements : vector2.elements, 0, newElements, 0,
-                    vector1.elements.length < vector2.elements.length ? vector1.elements.length : vector2.elements.length);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = (newElements[i] * vector2.elements[i]);
-            }
-            return new Vector(result);
+    public double getElement(int index) {
+        if (index < 0 || index > elements.length) {
+            throw new IllegalArgumentException("Such index doesn't exist;");
         }
+        return elements[index];
+    }
+
+    public double setElement(int index, double element) {
+        if (index < 0 || index > elements.length) {
+            throw new IllegalArgumentException("Such index doesn't exist;");
+        }
+        return elements[index] = element;
     }
 
     @Override
@@ -145,7 +151,7 @@ public class Vector {
 
     @Override
     public boolean equals(Object obj) {
-        final double EPSILON = 0.0001;
+
         if (this == obj) {
             return true;
         }
@@ -158,8 +164,8 @@ public class Vector {
         Vector other = (Vector) obj;
 
         if (this.getSize() == other.getSize()) {
-            for (double x : getDifference(other)) {
-                if (Math.abs(x) > EPSILON) {
+            for (double x : getDifference(other).elements) {
+                if (Math.abs(x) >= 0.0001) {
                     return false;
                 }
 
@@ -172,11 +178,6 @@ public class Vector {
     @Override
     public int hashCode() {
 
-        final int prime = 37;
-        int result = 1;
-        for (double x : elements) {
-            result = prime * result + (int) x;
-        }
-        return result;
+        return Arrays.hashCode(elements);
     }
 }
