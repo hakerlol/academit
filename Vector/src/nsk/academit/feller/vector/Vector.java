@@ -146,11 +146,10 @@ public class Vector {
         Vector other = (Vector) obj;
 
         if (this.getSize() == other.getSize()) {
-            for (double x : getDifference(other).elements) {
-                if (Math.abs(x) != 0) {
+            for (int i = 0; i < elements.length; i++) {
+                if (elements[i] != other.elements[i]) {
                     return false;
                 }
-
             }
             return true;
         }
