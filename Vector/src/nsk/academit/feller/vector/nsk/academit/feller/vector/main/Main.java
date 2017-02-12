@@ -24,7 +24,7 @@ public class Main {
         System.out.println(vector4.getSize());
         System.out.println(vector4.getLength());
 
-        System.out.println(vector1.getSum(vector2));
+        System.out.println(vector1.getDifference(vector2));
         System.out.println(vector2);
         System.out.println(getScalarMultiplication(vector1, vector2));
         System.out.println(vector1.equals(vector2));

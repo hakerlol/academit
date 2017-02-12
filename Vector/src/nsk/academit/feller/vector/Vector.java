@@ -14,14 +14,11 @@ public class Vector {
 
     public Vector(Vector vector) {
         this(vector.elements);
-        elements = new double[vector.elements.length];
         System.arraycopy(vector.elements, 0, this.elements, 0, vector.elements.length);
-
     }
 
     public Vector(double[] array) {
         this(array.length, array);
-        System.arraycopy(array, 0, elements, 0, array.length);
     }
 
     public Vector(int size, double[] array) {
@@ -45,7 +42,7 @@ public class Vector {
             return this;
         } else {
             double[] newArray = new double[vector.elements.length];
-            System.arraycopy(elements, 0, newArray, 0, vector.elements.length - 1);
+            System.arraycopy(elements, 0, newArray, 0, elements.length);
             elements = newArray;
             for (int i = 0; i < vector.elements.length; i++) {
                 elements[i] = (elements[i] + vector.elements[i]);
@@ -63,7 +60,7 @@ public class Vector {
             return this;
         } else {
             double[] newArray = new double[vector.elements.length];
-            System.arraycopy(elements, 0, newArray, 0, vector.elements.length - 1);
+            System.arraycopy(elements, 0, newArray, 0, elements.length);
             elements = newArray;
             for (int i = 0; i < vector.elements.length; i++) {
                 elements[i] = (elements[i] - vector.elements[i]);
@@ -106,19 +103,12 @@ public class Vector {
     }
 
     public static double getScalarMultiplication(Vector vector1, Vector vector2) {
-        if (vector1.elements.length == vector2.elements.length) {
-            double result = 0;
-            for (int i = 0; i < vector1.elements.length; i++) {
-                result += (vector1.elements[i] * vector2.elements[i]);
-            }
-            return result;
-        } else {
-            double result = 0;
-            for (int i = 0; i < (vector1.elements.length < vector2.elements.length ? vector1.elements.length : vector2.elements.length); i++) {
-                result += (vector1.elements[i] * vector2.elements[i]);
-            }
-            return result;
+        int minLength = Math.min(vector1.elements.length, vector2.elements.length);
+        double result = 0;
+        for (int i = 0; i < minLength; i++) {
+            result += (vector1.elements[i] * vector2.elements[i]);
         }
+        return result;
     }
 
     public double getElement(int index) {
@@ -157,7 +147,7 @@ public class Vector {
 
         if (this.getSize() == other.getSize()) {
             for (double x : getDifference(other).elements) {
-                if (Math.abs(x) != 0.0001) {
+                if (Math.abs(x) != 0) {
                     return false;
                 }
 
