@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Vector vector = new Vector(5);
         double[] array = new double[]{1, 2, 3, 4};
-        double[] array2 = new double[]{1, 2, 3, 4};
+        double[] array2 = new double[]{1, 2, 3, 4, 5};
         Vector vector1 = new Vector(array);
         Vector vector2 = new Vector(array2);
         Vector vector3 = new Vector(2, array2);

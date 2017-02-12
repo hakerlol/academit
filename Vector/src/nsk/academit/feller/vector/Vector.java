@@ -14,7 +14,6 @@ public class Vector {
 
     public Vector(Vector vector) {
         this(vector.elements);
-        System.arraycopy(vector.elements, 0, this.elements, 0, vector.elements.length);
     }
 
     public Vector(double[] array) {
@@ -35,36 +34,27 @@ public class Vector {
     }
 
     public Vector getSum(Vector vector) {
-        if (elements.length >= vector.elements.length) {
-            for (int i = 0; i < vector.elements.length; i++) {
-                elements[i] = (elements[i] + vector.elements[i]);
-            }
-            return this;
-        } else {
+        if (elements.length < vector.elements.length) {
             double[] newArray = new double[vector.elements.length];
             System.arraycopy(elements, 0, newArray, 0, elements.length);
             elements = newArray;
-            for (int i = 0; i < vector.elements.length; i++) {
-                elements[i] = (elements[i] + vector.elements[i]);
-            }
+
+        }
+        for (int i = 0; i < vector.elements.length; i++) {
+            elements[i] = (elements[i] + vector.elements[i]);
         }
         return this;
 
     }
 
     public Vector getDifference(Vector vector) {
-        if (elements.length >= vector.elements.length) {
-            for (int i = 0; i < vector.elements.length; i++) {
-                elements[i] = (elements[i] - vector.elements[i]);
-            }
-            return this;
-        } else {
+        if (elements.length < vector.elements.length) {
             double[] newArray = new double[vector.elements.length];
             System.arraycopy(elements, 0, newArray, 0, elements.length);
             elements = newArray;
-            for (int i = 0; i < vector.elements.length; i++) {
-                elements[i] = (elements[i] - vector.elements[i]);
-            }
+        }
+        for (int i = 0; i < vector.elements.length; i++) {
+            elements[i] = (elements[i] - vector.elements[i]);
         }
         return this;
     }
