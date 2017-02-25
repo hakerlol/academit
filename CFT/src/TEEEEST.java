@@ -56,6 +56,7 @@ public class TEEEEST {
         }
         return array;
     }
+
     public static ArrayList<String> sortDescending(ArrayList<String> array) {
 
         for (int i = 1; i < array.size(); i++) {
@@ -74,12 +75,12 @@ public class TEEEEST {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String [] array = {"мама", "мыла", "раму", "около", "подъезда", "вместо", "прогулки", "по", "парку"};
+        String[] array = {"мама", "мыла", "раму", "около", "подъезда", "вместо", "прогулки", "по", "парку"};
         ArrayList<String> lineArray = new ArrayList<>();
-        for(int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             lineArray.add(i, array[i]);
         }
-        for (String  x : sortAscending(lineArray)) {
+        for (String x : sortAscending(lineArray)) {
             System.out.println(x);
         }
 

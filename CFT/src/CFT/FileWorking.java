@@ -14,8 +14,7 @@ import static CFT.Sorting.sortInteger;
 public class FileWorking {
     public static ArrayList<Integer> readingInt(String nameInput) throws FileNotFoundException {
         ArrayList<Integer> list = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new FileInputStream(nameInput)))
-              {
+        try (Scanner scanner = new Scanner(new FileInputStream(nameInput))) {
 
             while (scanner.hasNext()) {
                 list.add(scanner.nextInt());
@@ -25,18 +24,19 @@ public class FileWorking {
         }
         return list;
     }
-    public static void  writingInt(ArrayList<Integer> list, String nameOutput) throws FileNotFoundException {
-        try(PrintWriter writer = new PrintWriter(nameOutput)) {
+
+    public static void writingInt(ArrayList<Integer> list, String nameOutput) throws FileNotFoundException {
+        try (PrintWriter writer = new PrintWriter(nameOutput)) {
             for (int x : list) {
                 String inFile = Integer.toString(x);
                 writer.println(inFile);
             }
         }
     }
-    public static ArrayList<String >  readingString(String nameInput) throws FileNotFoundException {
+
+    public static ArrayList<String> readingString(String nameInput) throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new FileInputStream(nameInput)))
-        {
+        try (Scanner scanner = new Scanner(new FileInputStream(nameInput))) {
             while (scanner.hasNext()) {
                 list.add(scanner.nextLine());
             }
@@ -45,8 +45,9 @@ public class FileWorking {
         }
         return list;
     }
-    public static void  writingString(ArrayList<String> list) throws FileNotFoundException {
-        try(PrintWriter writer = new PrintWriter("output.txt")) {
+
+    public static void writingString(ArrayList<String> list) throws FileNotFoundException {
+        try (PrintWriter writer = new PrintWriter("output.txt")) {
             for (String x : list) {
                 writer.println(x);
             }
