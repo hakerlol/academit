@@ -12,12 +12,12 @@ public enum SortingType {
         this.fileType = fileType;
     }
 
-    public static void chooseSortingType(String fileName, Enum x, String direction) throws FileNotFoundException {
+    public static void chooseSortingType(String inputFileName, Enum x, String direction) throws FileNotFoundException {
 
         if(x.equals(Numbers)){
-            Sorting.sortInteger(FileWorking.readingInt(fileName), SortDirection(direction));
+            Sorting.sortInteger(FileWorking.readingInt(inputFileName), SortDirection(direction));
         }else if(x.equals(Strings)){
-            Sorting.sortString(FileWorking.readingString(), SortDirection(direction));
+            Sorting.sortString(FileWorking.readingString(inputFileName), SortDirection(direction));
         }
         else {
             System.out.println("Недопустимая команда");

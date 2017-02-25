@@ -26,16 +26,16 @@ public class FileWorking {
         return list;
     }
     public static void  writingInt(ArrayList<Integer> list, String nameOutput) throws FileNotFoundException {
-        try(PrintWriter writer = new PrintWriter("output.txt")) {
+        try(PrintWriter writer = new PrintWriter(nameOutput)) {
             for (int x : list) {
                 String inFile = Integer.toString(x);
                 writer.println(inFile);
             }
         }
     }
-    public static ArrayList<String >  readingString() throws FileNotFoundException {
+    public static ArrayList<String >  readingString(String nameInput) throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new FileInputStream("input.txt")))
+        try (Scanner scanner = new Scanner(new FileInputStream(nameInput)))
         {
             while (scanner.hasNext()) {
                 list.add(scanner.nextLine());

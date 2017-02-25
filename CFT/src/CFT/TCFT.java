@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static CFT.Sorting.*;
 
 public class TCFT {
     public static void main(String[] args) throws FileNotFoundException {
