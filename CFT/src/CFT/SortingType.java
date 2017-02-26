@@ -1,37 +1,22 @@
 package CFT;
 
 
-import java.io.FileNotFoundException;
-
 public enum SortingType {
-    NUMBERS("-i"), STRINGS("-s");
+    INTEGER, STRING;
 
-    private String fileType;
+   /* private String fileType;
 
     SortingType(String fileType) {
         this.fileType = fileType;
     }
 
-    public static void chooseSortingType(String inputFileName, Enum x, String direction) throws FileNotFoundException {
-
-        if (x.equals(NUMBERS)) {
-            Sorting.sortInteger(FileWorking.readingInt(inputFileName), SortDirection(direction));
-        } else if (x.equals(STRINGS)) {
-            Sorting.sortString(FileWorking.readingString(inputFileName), SortDirection(direction));
+    public static boolean SortDirection(Enum fileType) {
+        if(fileType == NUMBERS){
+            return true;
+        } else if (fileType == STRINGS){
+            return false;
         } else {
-            System.out.println("Недопустимая команда");
+            throw new IllegalArgumentException();
         }
-    }
-
-    public static int SortDirection(String s) {
-        if (s.equals("-a")) {
-            return 1;
-        } else if (s.equals("-d")) {
-            return 0;
-        } else {
-            return -1;
-        }
-    }
-
-
+    }*/
 }

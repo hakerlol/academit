@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Sorting {
 
-    public static ArrayList<Integer> sortInteger(ArrayList<Integer> array, int direction) {
-        if (direction == 1) {
+    public static ArrayList<Integer> sortInteger(ArrayList<Integer> array, boolean direction) {
+        if (direction) {
             for (int i = 1; i < array.size(); i++) {
                 int temp = array.get(i);
                 int j = i;
@@ -21,7 +21,7 @@ public class Sorting {
                 }
             }
             return array;
-        } else if (direction == 0) {
+        } else if (!direction) {
             for (int i = 1; i < array.size(); i++) {
                 int temp = array.get(i);
                 int j = i;
@@ -54,8 +54,8 @@ public class Sorting {
     }
 
 
-    public static ArrayList<String> sortString(ArrayList<String> array, int direction) {
-        if (direction == 1) {
+    public static ArrayList<String> sortString(ArrayList<String> array, boolean direction) {
+        if (direction) {
             for (int i = 1; i < array.size(); i++) {
                 String temp = array.get(i);
                 int j = i;
@@ -69,7 +69,7 @@ public class Sorting {
                 }
             }
             return array;
-        } else if (direction == 0) {
+        } else if (!direction) {
             for (int i = 1; i < array.size(); i++) {
                 String temp = array.get(i);
                 int j = i;
