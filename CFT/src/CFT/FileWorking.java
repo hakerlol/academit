@@ -8,10 +8,23 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static CFT.Sorting.sortInteger;
-
 
 public class FileWorking {
+   /* public static <T> ArrayList reading(String nameInput) throws FileNotFoundException {
+        ArrayList list = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new FileInputStream(nameInput))) {
+
+            while (scanner.hasNext()) {
+                if()
+                list.add(scanner.nextInt());
+            }
+        } catch (InputMismatchException ex) {
+            System.out.println("File contains improper data for processing.");
+        }
+        return list;
+    }*/
+
+
     public static ArrayList<Integer> readingInt(String nameInput) throws FileNotFoundException {
         ArrayList<Integer> list = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream(nameInput))) {

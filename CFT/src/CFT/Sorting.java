@@ -2,102 +2,23 @@ package CFT;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class Sorting {
+    public static <T> ArrayList<T> sortINT(ArrayList<T> list, Comparator<T> comparator) {
+        for (int i = 1; i < list.size(); i++) {
+            T temp = list.get(i);
+            int j = i;
 
-    public static ArrayList<Integer> sortInteger(ArrayList<Integer> array, boolean direction) {
-        if (direction) {
-            for (int i = 1; i < array.size(); i++) {
-                int temp = array.get(i);
-                int j = i;
-
-                if (temp < array.get(i - 1)) {
-                    while ((j - 1) >= 0 && temp < array.get(j - 1)) {
-                        array.set(j, j - 1);
-                        j--;
-                    }
-                    array.set(j, temp);
+            if (comparator.compare(list.get(j), list.get(i - 1)) < 0) {
+                while ((j - 1) >= 0 && (comparator.compare(list.get(j), list.get(j - 1)) < 0)) {
+                    list.set(j, list.get(j - 1));
+                    j--;
                 }
+                list.set(j, temp);
             }
-            return array;
-        } else if (!direction) {
-            for (int i = 1; i < array.size(); i++) {
-                int temp = array.get(i);
-                int j = i;
-
-                if (temp > array.get(i - 1)) {
-                    while ((j - 1) >= 0 && temp > array.get(j - 1)) {
-                        array.set(j, j - 1);
-                        j--;
-                    }
-                    array.set(j, temp);
-                }
-            }
-            return array;
-        } else {
-            System.out.println("Передан недопустимый параметр, список будет отсортирован по возрастанию");
-            for (int i = 1; i < array.size(); i++) {
-                int temp = array.get(i);
-                int j = i;
-
-                if (temp < array.get(i - 1)) {
-                    while ((j - 1) >= 0 && temp < array.get(j - 1)) {
-                        array.set(j, j - 1);
-                        j--;
-                    }
-                    array.set(j, temp);
-                }
-            }
-            return array;
         }
-    }
-
-
-    public static ArrayList<String> sortString(ArrayList<String> array, boolean direction) {
-        if (direction) {
-            for (int i = 1; i < array.size(); i++) {
-                String temp = array.get(i);
-                int j = i;
-
-                if (temp.compareTo(array.get(i - 1)) < 0) {
-                    while ((j - 1) >= 0 && temp.compareTo(array.get(j - 1)) < 0) {
-                        array.set(j, array.get(j - 1));
-                        j--;
-                    }
-                    array.set(j, temp);
-                }
-            }
-            return array;
-        } else if (!direction) {
-            for (int i = 1; i < array.size(); i++) {
-                String temp = array.get(i);
-                int j = i;
-
-                if (temp.compareTo(array.get(i - 1)) > 0) {
-                    while ((j - 1) >= 0 && temp.compareTo(array.get(j - 1)) > 0) {
-                        array.set(j, array.get(j - 1));
-                        j--;
-                    }
-                    array.set(j, temp);
-                }
-            }
-            return array;
-        } else {
-            System.out.println("Передан недопустимый параметр, список будет отсортирован по возрастанию");
-            for (int i = 1; i < array.size(); i++) {
-                String temp = array.get(i);
-                int j = i;
-
-                if (temp.compareTo(array.get(i - 1)) > 0) {
-                    while ((j - 1) >= 0 && temp.compareTo(array.get(j - 1)) > 0) {
-                        array.set(j, array.get(j - 1));
-                        j--;
-                    }
-                    array.set(j, temp);
-                }
-            }
-            return array;
-        }
+        return list;
     }
 }

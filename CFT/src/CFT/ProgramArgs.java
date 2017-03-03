@@ -11,6 +11,22 @@ public class ProgramArgs {
         this.inputFileName = inputFileName;
     }
 
+    public String getInputFileName() {
+        return inputFileName;
+    }
+
+    public String getOutputFileName() {
+        return outputFileName;
+    }
+
+    public Enum getSortType() {
+        return sortType;
+    }
+
+    public boolean isSortDirection() {
+        return sortDirection;
+    }
+
     public void setOutputFileName(String outputFileName) {
         this.outputFileName = outputFileName;
     }
