@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 
 public class Sorting {
-    public static <T> ArrayList<T> sortINT(ArrayList<T> list, Comparator<T> comparator) {
+    public static <T> ArrayList<T> sortFileObjects(ArrayList<T> list, Comparator<T> comparator) {
         for (int i = 1; i < list.size(); i++) {
             T temp = list.get(i);
             int j = i;

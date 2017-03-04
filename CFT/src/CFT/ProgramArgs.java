@@ -5,7 +5,7 @@ public class ProgramArgs {
     private String inputFileName;
     private String outputFileName;
     private Enum sortType;
-    private boolean sortDirection;
+    private Enum sortDirection;
 
     public void setInputFileName(String inputFileName) {
         this.inputFileName = inputFileName;
@@ -23,7 +23,7 @@ public class ProgramArgs {
         return sortType;
     }
 
-    public boolean isSortDirection() {
+    public Enum getSortDirection() {
         return sortDirection;
     }
 
@@ -35,7 +35,7 @@ public class ProgramArgs {
         this.sortType = sortType;
     }
 
-    public void setSortDirection(boolean sortDirection) {
+    public void setSortDirection(Enum sortDirection) {
         this.sortDirection = sortDirection;
     }
 }
