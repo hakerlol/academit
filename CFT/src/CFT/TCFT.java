@@ -3,29 +3,28 @@ package CFT;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import static CFT.SortDirection.ASCENDING;
-import static CFT.SortDirection.DESCENDING;
-import static CFT.SortingType.INTEGER;
-import static CFT.SortingType.STRING;
+
+
 
 public class TCFT {
     public static void main(String[] args) throws FileNotFoundException {
+        ProgramArgs programArgs = Parser.parseArgs(args);
 
-        Enum fileType = Parser.chooseSort(args).getSortType();
-        Enum sortingDirection = Parser.chooseSort(args).getSortDirection();
+        Enum fileType = programArgs.getSortType();
+        Enum sortingDirection = programArgs.getSortDirection();
         ArrayList<?> list;
-        if(fileType == INTEGER && sortingDirection == ASCENDING){
-           list =  FileWorking.readIntegers(Parser.chooseSort(args).getInputFileName());
-         //  list = Sorting.sortFileObjects(list, IntegerComparator());
-        } else if (fileType == INTEGER && sortingDirection == DESCENDING){
-            list =  FileWorking.readIntegers(Parser.chooseSort(args).getInputFileName());
-       //     list = Sorting.sortFileObjects(list, IntegerComparator());
-        } else if (fileType == STRING && sortingDirection == ASCENDING){
-            list =  FileWorking.readStrings(Parser.chooseSort(args).getInputFileName());
+        if(fileType == SortingType.INTEGER && sortingDirection == SortDirection.ASCENDING){
+           list =  FileWorking.readIntegers(programArgs.getInputFilePath());
+          // list = Sorting.sort(list, Integer::compareTo);
+        } else if (fileType == SortingType.INTEGER && sortingDirection == SortDirection.DESCENDING){
+            list =  FileWorking.readIntegers(programArgs.getInputFilePath());
+         //   list = Sorting.sort(list, IntegerComparator());
+        } else if (fileType == SortingType.STRING && sortingDirection == SortDirection.ASCENDING){
+            list =  FileWorking.readStrings(programArgs.getInputFilePath());
         }else {
-            list =  FileWorking.readStrings(Parser.chooseSort(args).getInputFileName());
+            list =  FileWorking.readStrings(programArgs.getInputFilePath());
         }
 
-        FileWorking.writeInFile(list, Parser.chooseSort(args).getOutputFileName());
+        FileWorking.writeInFile(list, programArgs.getOutputFilePath());
     }
 }

@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -14,8 +13,7 @@ public class FileWorking {
     public static void writeInFile(ArrayList<?> list, String outputFilePath) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(outputFilePath)) {
             for (Object x : list) {
-                String inFile = Objects.toString(x);
-                writer.println(inFile);
+                writer.println(x);
             }
         }
     }

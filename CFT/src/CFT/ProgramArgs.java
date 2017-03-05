@@ -2,21 +2,21 @@ package CFT;
 
 
 public class ProgramArgs {
-    private String inputFileName;
-    private String outputFileName;
+    private String inputFilePath;
+    private String outputFilePath;
     private Enum sortType;
     private Enum sortDirection;
 
-    public void setInputFileName(String inputFileName) {
-        this.inputFileName = inputFileName;
+    public void setInputFilePath(String inputFilePath) {
+        this.inputFilePath = inputFilePath;
     }
 
-    public String getInputFileName() {
-        return inputFileName;
+    public String getInputFilePath() {
+        return inputFilePath;
     }
 
-    public String getOutputFileName() {
-        return outputFileName;
+    public String getOutputFilePath() {
+        return outputFilePath;
     }
 
     public Enum getSortType() {
@@ -27,8 +27,8 @@ public class ProgramArgs {
         return sortDirection;
     }
 
-    public void setOutputFileName(String outputFileName) {
-        this.outputFileName = outputFileName;
+    public void setOutputFilePath(String outputFilePath) {
+        this.outputFilePath = outputFilePath;
     }
 
     public void setSortType(Enum sortType) {
