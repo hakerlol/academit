@@ -4,8 +4,8 @@ package CFT;
 public class ProgramArgs {
     private String inputFilePath;
     private String outputFilePath;
-    private Enum sortType;
-    private Enum sortDirection;
+    private SortingType sortType;
+    private SortDirection sortDirection;
 
     public void setInputFilePath(String inputFilePath) {
         this.inputFilePath = inputFilePath;
@@ -19,11 +19,11 @@ public class ProgramArgs {
         return outputFilePath;
     }
 
-    public Enum getSortType() {
+    public SortingType getSortType() {
         return sortType;
     }
 
-    public Enum getSortDirection() {
+    public SortDirection getSortDirection() {
         return sortDirection;
     }
 
@@ -31,11 +31,11 @@ public class ProgramArgs {
         this.outputFilePath = outputFilePath;
     }
 
-    public void setSortType(Enum sortType) {
+    public void setSortType(SortingType sortType) {
         this.sortType = sortType;
     }
 
-    public void setSortDirection(Enum sortDirection) {
+    public void setSortDirection(SortDirection sortDirection) {
         this.sortDirection = sortDirection;
     }
 }

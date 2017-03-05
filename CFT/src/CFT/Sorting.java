@@ -12,7 +12,7 @@ public class Sorting {
             int j = i;
 
             if (comparator.compare(list.get(j), list.get(i - 1)) < 0) {
-                while ((j - 1) >= 0 && (comparator.compare(list.get(j), list.get(j - 1)) < 0)) {
+                while ((j - 1) >= 0 && (comparator.compare(temp, list.get(j - 1)) < 0)) {
                     list.set(j, list.get(j - 1));
                     j--;
                 }
