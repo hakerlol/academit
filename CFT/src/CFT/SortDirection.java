@@ -1,5 +1,6 @@
 package CFT;
 
+import java.util.Comparator;
 
 public enum SortDirection {
     ASCENDING, DESCENDING;
@@ -14,8 +15,16 @@ public enum SortDirection {
                 return DESCENDING;
             }
             default: {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Неверно выбрано направление сортировки");
             }
+        }
+    }
+
+    public static <T> Comparator<T> getDirection(SortDirection direction, Comparator<T> comparator) {
+        if (direction == SortDirection.ASCENDING) {
+            return comparator;
+        } else {
+            return comparator.reversed();
         }
     }
 }

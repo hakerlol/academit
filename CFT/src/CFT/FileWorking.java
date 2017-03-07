@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 
 public class FileWorking {
-    public static void writeInFile(ArrayList<?> list, String outputFilePath) throws FileNotFoundException {
+    public static void writeToFile(ArrayList<?> list, String outputFilePath) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(outputFilePath)) {
             for (Object x : list) {
                 writer.println(x);
