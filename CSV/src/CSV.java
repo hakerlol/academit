@@ -34,20 +34,69 @@ public class CSV {
                         inQuotes = true;
                         newLine = false;
                         quoteIndex = i + 1;
-
+                    }
+                    if (!inQuotes) {
+                        if (newLine) {
+                            if (i == x.length() - 1 && x.charAt(i) == ',') {
+                                if (x.charAt(i - 1) == '"') {
+                                    newArrayList.add("<td>" + "</td>");
+                                } else {
+                                    newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>" + "<td>" + "</td>");
+                                    newLine = true;
+                                    commaIndex = 0;
+                                }
+                            } else if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
+                                newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
+                                commaIndex = i + 1;
+                            } else if (i == x.length() - 1) {
+                                newArrayList.add("<td>" + x.substring(commaIndex, i + 1) + "</td>");
+                                newLine = true;
+                                commaIndex = 0;
+                            }
+                        } else {
+                            if (i == x.length() - 1 && x.charAt(i) == ',') {
+                                if (x.charAt(i - 1) == '"') {
+                                    newArrayList.add("<td>" + "</td>");
+                                } else {
+                                    newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>" + "<td>" + "</td>");
+                                    newLine = true;
+                                    commaIndex = 0;
+                                }
+                            } else if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
+                                newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
+                                commaIndex = i + 1;
+                            } else if (x.charAt(i) == ',' && x.charAt(i - 1) == '"') {
+                                commaIndex = i + 1;
+                            } else if (i == x.length() - 1) {
+                                newArrayList.add("<td>" + x.substring(commaIndex, i + 1) + "</td>");
+                                newLine = true;
+                                commaIndex = 0;
+                            }
+                        }
                     }
                     if (!newLine && inQuotes) {
                         for (int j = quoteIndex; j < x.length(); j++) {
                             if (j < x.length() - 1 && x.charAt(j) == '"' && (x.charAt(j + 1) == '"')) {
                                 shieldingQuote = j;
                                 for (int k = shieldingQuote + 2; k < x.length(); k++) {
-                                    if (k != x.length() - 1 && x.charAt(k) == '"' && (x.charAt(k + 1) == ',')) {
+                                    if (k != x.length() - 1 && x.charAt(k) == '"' && ((x.charAt(k + 1) == ','))) {
                                         newArrayList.add("<td>" + x.substring(quoteIndex, shieldingQuote) + x.substring(shieldingQuote + 1, k) + "</td>");
                                         inQuotes = false;
                                         i = k;
                                         break;
+                                    } else if (k == x.length() - 1 && x.charAt(k) == '"') {
+                                        newArrayList.add("<td>" + x.substring(quoteIndex, shieldingQuote) + x.substring(shieldingQuote + 1, k) + "</td>");
+                                        inQuotes = false;
+                                        newLine = true;
+                                        i = k;
+                                        break;
                                     }
                                 }
+                                break;
+                            } else if (x.charAt(j) == '"') {
+                                newArrayList.add("<td>" + x.substring(quoteIndex, j) + "</td>");
+                                inQuotes = false;
+                                i = j;
                                 break;
                             } else if (j == x.length() - 1) {
                                 newArrayList.add("<td>" + x.substring(quoteIndex));
@@ -58,40 +107,16 @@ public class CSV {
                     if (newLine && inQuotes && i == 0) {
                         for (int j = 0; j < x.length(); j++) {
                             if (x.charAt(j) == '"') {
-                                newArrayList.add(x.substring(0, j) + "</td>");
+                                newArrayList.add(x.substring(0, j));
                                 newLine = false;
                                 inQuotes = false;
+                                commaIndex = 0;
                                 i = j;
+                                break;
                             }
                         }
                     }
-                    if (!inQuotes) {
-                        if (newLine) {
-                            if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
-                                newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
-                                commaIndex = i + 1;
-                            } else if (i == x.length() - 1) {
-                                newArrayList.add("<td>" + x.substring(commaIndex, i + 1) + "</td>");
-                                newLine = true;
-                                commaIndex = 0;
-                            }
-                        } else {
-                            if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
-                                newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
-                                commaIndex = i + 1;
-                            } else if (x.charAt(i) == ',' && i == x.length() - 1) {
-                                newArrayList.add("<td>" + "</td>");
-                                newLine = true;
-                                commaIndex = 0;
-                            } else if (x.charAt(i) == ',' && x.charAt(i - 1) == '"') {
-                                commaIndex = i + 1;
-                            } else if (i == x.length() - 1) {
-                                newArrayList.add("<td>" + x.substring(commaIndex, i + 1) + "</td>");
-                                newLine = true;
-                                commaIndex = 0;
-                            }
-                        }
-                    }
+
                 }
                 if (!inQuotes) {
                     newArrayList.add("</tr>");
