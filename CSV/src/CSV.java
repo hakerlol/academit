@@ -19,36 +19,43 @@ public class CSV {
             }
             int commaIndex = 0;
             int quoteIndex = 0;
+            int shieldingQuote;
             boolean inQuotes = false;
             boolean newLine = true;
 
             for (String x : arrayList) {
+
                 if (!inQuotes) {
                     newArrayList.add("<tr>");
+                    commaIndex = 0;
                 }
                 for (int i = 0; i < x.length(); i++) {
                     if (x.charAt(i) == '"') {
                         inQuotes = true;
                         newLine = false;
-                        commaIndex = 0;
                         quoteIndex = i + 1;
+
                     }
                     if (!newLine && inQuotes) {
                         for (int j = quoteIndex; j < x.length(); j++) {
-                            if (x.charAt(j) == '"' && (j + 1 < x.length()) && (x.charAt(j + 1) == '"')) {
-                                j = j + 1;
-                            }
-                            if (x.charAt(j) == '"') {
-                                newArrayList.add("<td>" + x.substring(quoteIndex, j) + "</td>");
-                                inQuotes = false;
-                                i = j;
+                            if (j < x.length() - 1 && x.charAt(j) == '"' && (x.charAt(j + 1) == '"')) {
+                                shieldingQuote = j;
+                                for (int k = shieldingQuote + 2; k < x.length(); k++) {
+                                    if (k != x.length() - 1 && x.charAt(k) == '"' && (x.charAt(k + 1) == ',')) {
+                                        newArrayList.add("<td>" + x.substring(quoteIndex, shieldingQuote) + x.substring(shieldingQuote + 1, k) + "</td>");
+                                        inQuotes = false;
+                                        i = k;
+                                        break;
+                                    }
+                                }
                                 break;
                             } else if (j == x.length() - 1) {
                                 newArrayList.add("<td>" + x.substring(quoteIndex));
                                 newLine = true;
                             }
                         }
-                    } else if (newLine && inQuotes && i == 0) {
+                    }
+                    if (newLine && inQuotes && i == 0) {
                         for (int j = 0; j < x.length(); j++) {
                             if (x.charAt(j) == '"') {
                                 newArrayList.add(x.substring(0, j) + "</td>");
@@ -57,7 +64,8 @@ public class CSV {
                                 i = j;
                             }
                         }
-                    } else if (!inQuotes) {
+                    }
+                    if (!inQuotes) {
                         if (newLine) {
                             if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
                                 newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
@@ -71,6 +79,10 @@ public class CSV {
                             if (x.charAt(i) == ',' && x.charAt(i - 1) != '"') {
                                 newArrayList.add("<td>" + x.substring(commaIndex, i) + "</td>");
                                 commaIndex = i + 1;
+                            } else if (x.charAt(i) == ',' && i == x.length() - 1) {
+                                newArrayList.add("<td>" + "</td>");
+                                newLine = true;
+                                commaIndex = 0;
                             } else if (x.charAt(i) == ',' && x.charAt(i - 1) == '"') {
                                 commaIndex = i + 1;
                             } else if (i == x.length() - 1) {
@@ -84,7 +96,6 @@ public class CSV {
                 if (!inQuotes) {
                     newArrayList.add("</tr>");
                 }
-
             }
             String header = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"/><title>Таблица</title></head><body><table border=\"3\">";
             String end = "</table></body></html>";
