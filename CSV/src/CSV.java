@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        try (Scanner scanner = new Scanner(new FileInputStream("table.txt")); PrintWriter writer = new PrintWriter("output.html")) {
+        try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
 
             ArrayList<String> arrayList = new ArrayList<>();
             StringBuilder result = new StringBuilder();
@@ -21,7 +21,7 @@ public class CSV {
             boolean inQuotes = false;
 
             for (String x : arrayList) {
-                
+
                 for (int i = 0; i < x.length(); i++) {
                     char c = x.charAt(i);
 
