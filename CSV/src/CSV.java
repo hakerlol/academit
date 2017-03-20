@@ -19,60 +19,56 @@ public class CSV {
             }
 
             boolean inQuotes = false;
-            for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).contains("&")) {
-                    String line = arrayList.get(i);
-                    arrayList.remove(i);
-                    arrayList.add(i, line.replaceAll("&", "&amp;"));
-                }
-                if (arrayList.get(i).contains("<")) {
-                    String line = arrayList.get(i);
-                    arrayList.remove(i);
-                    arrayList.add(i, line.replaceAll("<", "&lt;"));
-                }
-                if (arrayList.get(i).contains(">")) {
-                    String line = arrayList.get(i);
-                    arrayList.remove(i);
-                    arrayList.add(i, line.replaceAll(">", "&gt;"));
-                }
-
-            }
 
             for (String x : arrayList) {
-                if (!inQuotes) {
-                    result.append("<tr><td>");
-                }
+                
                 for (int i = 0; i < x.length(); i++) {
-                    char character = x.charAt(i);
+                    char c = x.charAt(i);
 
-                    if (x.charAt(i) != ',' && character != '"') {
-                        result.append(x.charAt(i));
-                    } else if (!inQuotes && character == ',' && i != 0 && x.charAt(i - 1) == '"') {
-                        result.append("<td>");
-                    } else if (!inQuotes && character == ',') {
-                        result.append("</td>").append("<td>");
-                    } else if (!inQuotes && character == '"') {
-                        inQuotes = true;
-                    } else if (inQuotes && character != '"') {
-                        result.append(character);
-                    } else if (inQuotes) {
-                        if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
-                            result.append(character);
+                    if (inQuotes) {
+                        if (c == '<') {
+                            result.append("&lt;");
+                        } else if (c == '>') {
+                            result.append("&gt;");
+                        } else if (c == '&') {
+                            result.append("&amp;");
+                        } else if (i == x.length() - 1 && c == '"') {
+                            inQuotes = false;
+                            result.append("</td><br>");
+                        } else if (c != '"') {
+                            result.append(c);
+                        } else if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
+                            result.append(c);
                             i += 1;
                         } else {
                             inQuotes = false;
                             result.append("</td>");
                         }
+                    } else {
+                        if (c == '<') {
+                            result.append("&lt;");
+                        } else if (c == '>') {
+                            result.append("&gt;");
+                        } else if (c == '&') {
+                            result.append("&amp;");
+                        } else if (i == 0) {
+                            result.append("<tr><td>").append(c);
+                        } else if (c != ',' && c != '"') {
+                            result.append(c);
+                        } else if (c == ',' && i == x.length() - 1 && x.charAt(i - 1) == '"') {
+                            result.append("<td></td><br>");
+                        } else if (c == ',' && i == x.length() - 1) {
+                            result.append("</td><td></td><br>");
+                        } else if (c == ',' && x.charAt(i - 1) == '"') {
+                            result.append("<td>");
+                        } else if (c == ',') {
+                            result.append("</td><td>");
+                        } else if (i == x.length() - 1) {
+                            result.append("</tr><br>");
+                        } else {
+                            inQuotes = true;
+                        }
                     }
-                    if (i == x.length() - 1 && character == ',') {
-                        result.append("</td>");
-                    }
-                }
-                if (!inQuotes) {
-                    result.append("</tr>");
-                }
-                if (inQuotes) {
-                    result.append(" ");
                 }
             }
 
@@ -81,7 +77,7 @@ public class CSV {
             writer.print(header);
             writer.print(result);
             writer.print(end);
-            
+
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
         }
