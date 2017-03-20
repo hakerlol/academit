@@ -10,58 +10,70 @@ import java.util.Scanner;
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        try (Scanner scanner = new Scanner(new FileInputStream("table.txt")); PrintWriter writer = new PrintWriter("output.html")) {
+        try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
 
             ArrayList<String> arrayList = new ArrayList<>();
             StringBuilder result = new StringBuilder();
             while (scanner.hasNext()) {
                 arrayList.add(scanner.nextLine());
             }
-            int quoteAmount = 0;
-            int shieldingQuote;
+
             boolean inQuotes = false;
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).contains("&")) {
+                    String line = arrayList.get(i);
+                    arrayList.remove(i);
+                    arrayList.add(i, line.replaceAll("&", "&amp;"));
+                }
+                if (arrayList.get(i).contains("<")) {
+                    String line = arrayList.get(i);
+                    arrayList.remove(i);
+                    arrayList.add(i, line.replaceAll("<", "&lt;"));
+                }
+                if (arrayList.get(i).contains(">")) {
+                    String line = arrayList.get(i);
+                    arrayList.remove(i);
+                    arrayList.add(i, line.replaceAll(">", "&gt;"));
+                }
+
+            }
+
 
             for (String x : arrayList) {
                 if (!inQuotes) {
-                    result.append("<tr>").append("<td>");
+                    result.append("<tr><td>");
                 }
-
                 for (int i = 0; i < x.length(); i++) {
-                    if (x.charAt(i) != ',' && x.charAt(i) != '"') {
+                    char character = x.charAt(i);
+
+                    if (x.charAt(i) != ',' && character != '"') {
                         result.append(x.charAt(i));
-                    } else if (!inQuotes && x.charAt(i) == ',') {
+                    } else if (!inQuotes && character == ',' && i != 0 && x.charAt(i - 1) == '"') {
+                        result.append("<td>");
+                    } else if (!inQuotes && character == ',') {
                         result.append("</td>").append("<td>");
-                    } else if (!inQuotes && x.charAt(i) == '"') {
-                        quoteAmount++;
+                    } else if (!inQuotes && character == '"') {
                         inQuotes = true;
-                    } else if (inQuotes && x.charAt(i) != '"') {
-                        result.append(x.charAt(i));
-                    } else if (inQuotes && x.charAt(i) == '"') {
+                    } else if (inQuotes && character != '"') {
+                        result.append(character);
+                    } else if (inQuotes && character == '"') {
                         if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
-                            shieldingQuote = i;
-                            quoteAmount++;
-                            for (int j = shieldingQuote + 1; j < x.length(); j++) {
-                                if (x.charAt(j) == '"') {
-                                    quoteAmount++;
-                                }
-                                if (x.charAt(j) == '"' && ((j == x.length() - 1) || (x.charAt(j + 1) != '"' && quoteAmount % 2 == 0))) {
-                                    result.append("</td>");
-                                    inQuotes = false;
-                                    i = j;
-                                    break;
-                                } else if (j != shieldingQuote) {
-                                    result.append(x.charAt(j));
-                                }
-                            }
+                            result.append(character);
+                            i += 1;
                         } else {
                             inQuotes = false;
                             result.append("</td>");
                         }
-                        quoteAmount = 0;
+                    }
+                    if (i == x.length() - 1 && character == ',') {
+                        result.append("</td>");
                     }
                 }
                 if (!inQuotes) {
                     result.append("</tr>");
+                }
+                if (inQuotes) {
+                    result.append(" ");
                 }
             }
 
@@ -70,6 +82,7 @@ public class CSV {
             writer.print(header);
             writer.print(result);
             writer.print(end);
+
 
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
