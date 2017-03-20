@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
+        try (Scanner scanner = new Scanner(new FileInputStream("table.txt")); PrintWriter writer = new PrintWriter("output.html")) {
 
             ArrayList<String> arrayList = new ArrayList<>();
             StringBuilder result = new StringBuilder();
@@ -38,7 +38,6 @@ public class CSV {
 
             }
 
-
             for (String x : arrayList) {
                 if (!inQuotes) {
                     result.append("<tr><td>");
@@ -56,7 +55,7 @@ public class CSV {
                         inQuotes = true;
                     } else if (inQuotes && character != '"') {
                         result.append(character);
-                    } else if (inQuotes && character == '"') {
+                    } else if (inQuotes) {
                         if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
                             result.append(character);
                             i += 1;
@@ -82,8 +81,7 @@ public class CSV {
             writer.print(header);
             writer.print(result);
             writer.print(end);
-
-
+            
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
         }
