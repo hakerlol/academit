@@ -32,9 +32,12 @@ public class CSV {
                     } else if (c == '&') {
                         result.append("&amp;");
                     } else if (inQuotes) {
-                        if (i == x.length() - 1 && c == '"') {
+                        if(i == x.length() - 1 && c != '"'){
+                            result.append(c).append("<br>");
+                        }
+                        else if (i == x.length() - 1 && c == '"') {
                             inQuotes = false;
-                            result.append("</td></tr><br>");
+                            result.append("<br></td></tr>");
                         } else if (c != '"') {
                             result.append(c);
                         } else if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
@@ -48,13 +51,13 @@ public class CSV {
                         if (i == 0) {
                             result.append("<tr><td>").append(c);
                         } else if (c != ',' && c != '"' && i == x.length() - 1) {
-                            result.append(c).append("</td></tr><br>");
+                            result.append(c).append("<br></td></tr>");
                         } else if (c != ',' && c != '"') {
                             result.append(c);
                         } else if (c == ',' && i == x.length() - 1 && x.charAt(i - 1) == '"') {
-                            result.append("<td></td></tr><br>");
+                            result.append("<td><br></td></tr><br>");
                         } else if (c == ',' && i == x.length() - 1) {
-                            result.append("</td><td></td></tr><br>");
+                            result.append("</td><td><br></td></tr>");
                         } else if (c == ',' && x.charAt(i - 1) == '"') {
                             result.append("<td>");
                         } else if (c == ',') {
