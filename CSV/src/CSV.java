@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
+        try (Scanner scanner = new Scanner(new FileInputStream("table.txt")); PrintWriter writer = new PrintWriter("output.txt")) {
 
             ArrayList<String> arrayList = new ArrayList<>();
             StringBuilder result = new StringBuilder();
@@ -25,16 +25,16 @@ public class CSV {
                 for (int i = 0; i < x.length(); i++) {
                     char c = x.charAt(i);
 
-                    if (inQuotes) {
-                        if (c == '<') {
-                            result.append("&lt;");
-                        } else if (c == '>') {
-                            result.append("&gt;");
-                        } else if (c == '&') {
-                            result.append("&amp;");
-                        } else if (i == x.length() - 1 && c == '"') {
+                    if (c == '<') {
+                        result.append("&lt;");
+                    } else if (c == '>') {
+                        result.append("&gt;");
+                    } else if (c == '&') {
+                        result.append("&amp;");
+                    } else if (inQuotes) {
+                        if (i == x.length() - 1 && c == '"') {
                             inQuotes = false;
-                            result.append("</td><br>");
+                            result.append("</td></tr><br>");
                         } else if (c != '"') {
                             result.append(c);
                         } else if (i != x.length() - 1 && x.charAt(i + 1) == '"') {
@@ -45,26 +45,20 @@ public class CSV {
                             result.append("</td>");
                         }
                     } else {
-                        if (c == '<') {
-                            result.append("&lt;");
-                        } else if (c == '>') {
-                            result.append("&gt;");
-                        } else if (c == '&') {
-                            result.append("&amp;");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             result.append("<tr><td>").append(c);
+                        } else if (c != ',' && c != '"' && i == x.length() - 1) {
+                            result.append(c).append("</td></tr><br>");
                         } else if (c != ',' && c != '"') {
                             result.append(c);
                         } else if (c == ',' && i == x.length() - 1 && x.charAt(i - 1) == '"') {
-                            result.append("<td></td><br>");
+                            result.append("<td></td></tr><br>");
                         } else if (c == ',' && i == x.length() - 1) {
-                            result.append("</td><td></td><br>");
+                            result.append("</td><td></td></tr><br>");
                         } else if (c == ',' && x.charAt(i - 1) == '"') {
                             result.append("<td>");
                         } else if (c == ',') {
                             result.append("</td><td>");
-                        } else if (i == x.length() - 1) {
-                            result.append("</tr><br>");
                         } else {
                             inQuotes = true;
                         }
