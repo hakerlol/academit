@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
+        if (args.length == 2) {
 
-        try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
+            try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
 
-            if (args.length == 2) {
 
                 ArrayList<String> arrayList = new ArrayList<>();
                 while (scanner.hasNext()) {
@@ -49,12 +49,8 @@ public class CSV {
                         } else {
                             if (i == 0 && i == line.length() - 1 && c == ',') {
                                 break;
-                            } else if (i == 0 && c == ',' && line.charAt(i + 1) != ',' && line.charAt(i + 1) != '"') {
-                                tableHtml.append("</td><td>");
                             } else if (c == ',') {
                                 tableHtml.append("</td><td>");
-                            } else if (i == 0 && c != '"') {
-                                tableHtml.append(c);
                             } else if (c != '"') {
                                 tableHtml.append(c);
                             } else {
@@ -73,13 +69,13 @@ public class CSV {
                 writer.print(tableHtml);
                 writer.print(end);
 
-            } else {
-                System.out.printf("%s%n%s%n%s%n%", "Неверное количество аргументов, проверьте вводимые аргументы",
-                        "Первый аргумент - имя файла в формате .txt, в котором лежит исходная таблица", "Второй аргумент - имя файла в формате .html");
+            } catch (FileNotFoundException e) {
+                System.out.println("Файл не найден");
+
             }
-            
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден");
+        } else {
+            System.out.printf("%s%n%s%n%s%n%", "Неверное количество аргументов, проверьте вводимые аргументы",
+                    "Первый аргумент - имя файла в формате .txt, в котором лежит исходная таблица", "Второй аргумент - имя файла в формате .html");
         }
     }
 }
