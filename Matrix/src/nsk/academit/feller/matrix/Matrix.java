@@ -2,63 +2,83 @@ package nsk.academit.feller.matrix;
 
 import nsk.academit.feller.vector.Vector;
 
+import java.util.Arrays;
+
 
 public class Matrix {
-    private double[][] elements;
+    private Vector[] vectors;
 
 
     public Matrix(int n, int m) {
         if (n <= 0 || m <= 0) {
             throw new IllegalArgumentException("size can't be negative");
         }
-        elements = new double[n][m];
+        vectors = new Vector[n];
+        for (int i = 0; i < vectors.length; i++) {
+            vectors[i] = new Vector(m);
+        }
     }
 
     public Matrix(Matrix matrix) {
-        this(matrix.elements);
+        this(matrix.vectors);
     }
 
     public Matrix(double[][] array) {
-        elements = new double[array.length][array[0].length];
-        System.arraycopy(array, 0, elements, 0, array.length);
-        System.arraycopy(array[0], 0, elements[0], 0, array[0].length);
+        vectors = new Vector[array.length];
+        for (int i = 0; i < vectors.length; i++) {
+            vectors[i] = new Vector(array[0].length);
+            for (int j = 0; j < array[0].length; j++) {
+                vectors[i].setElement(j, array[i][j]);
+            }
+        }
     }
 
     public Matrix(Vector[] vectors) {
-        elements = new double[vectors.length][vectors[0].getSize()];
+        for (int i = 0; i < vectors.length; i++) {
+            if (i != vectors.length - 1 && vectors[i].getSize() != vectors[i + 1].getSize()) {
+                throw new IllegalArgumentException("all vectors have to be the same size");
+            }
+        }
+        this.vectors = vectors;
     }
 
-    public int getSize() {
-        return (elements.length * elements[0].length);
+    public int getColumnLength() {
+        return (vectors.length);
+    }
+
+    public int getRowLength() {
+        return (vectors[0].getSize());
     }
 
     public double getElement(int xIndex, int yIndex) {
-        if ((xIndex < 0 || xIndex >= elements.length) || (yIndex < 0 || yIndex >= elements[0].length)) {
+        if ((xIndex < 0 || xIndex >= vectors.length) || (yIndex < 0 || yIndex >= vectors[0].getSize())) {
             throw new IllegalArgumentException("Such index doesn't exist;");
         }
-        return elements[xIndex][yIndex];
+
+        return vectors[xIndex].getElement(yIndex);
     }
 
     public void setElement(int xIndex, int yIndex, double element) {
-        if ((xIndex < 0 || xIndex >= elements.length) || (yIndex < 0 || yIndex >= elements[0].length)) {
+        if ((xIndex < 0 || xIndex >= vectors.length) || (yIndex < 0 || yIndex >= vectors[0].getSize())) {
             throw new IllegalArgumentException("Such index doesn't exist;");
         }
-        elements[xIndex][yIndex] = element;
+        vectors[xIndex].setElement(yIndex, element);
     }
 
-    public double[] getColumn(int yIndex) {
-        if (yIndex < 0 || yIndex >= elements[0].length) {
+    public Vector getColumn(int yIndex) {
+        if (yIndex < 0 || yIndex >= vectors[0].getSize()) {
             throw new IllegalArgumentException("Such index doesn't exist;");
         }
-        double[] array = new double[yIndex];
-        for (int i = 0; i < elements.length; i++) {
-            array[i] = elements[i][yIndex];
+
+        double[] array = new double[vectors.length];
+        for (int i = 0; i < vectors.length; i++) {
+            array[i] = getElement(i, yIndex);
         }
 
-        return array;
+        return new Vector(vectors.length, array);
     }
 
-    public double[][] getTransposition() {
+   /* public double[][] getTransposition() {
         double[][] array = new double[elements[0].length][elements.length];
 
         for (int i = 0; i < array.length; i++) {
@@ -68,33 +88,34 @@ public class Matrix {
         }
 
         return array;
-    }
+    }*/
 
     public Matrix calcScalar(double number) {
-        for (int i = 0; i < this.elements.length; i++) {
-            for (int j = 0; j < this.elements[0].length; j++) {
-                elements[i][j] = (elements[i][j] * number);
+        for (int i = 0; i < this.vectors.length; i++) {
+            for (int j = 0; j < this.vectors[0].getSize(); j++) {
+                // elements[i][j] = (elements[i][j] * number);
+                vectors[i].setElement(j, vectors[i].getElement(j) * number);
             }
         }
         return this;
     }
 
-    public double getDet3() {
-        if (elements.length != elements[0].length) {
+   /* private double getDet3() {
+        if (vectors.length != vectors[0].getSize()) {
             throw new IllegalArgumentException("Can't count det");
         }
         return elements[0][0] * elements[1][1] * elements[2][2] + elements[0][1] * elements[1][2] * elements[2][0] + elements[1][0] * elements[2][1] * elements[0][2] -
                 elements[2][0] * elements[1][1] * elements[0][2] - elements[0][1] * elements[1][0] * elements[2][2] - elements[0][0] * elements[1][2] * elements[2][1];
     }
 
-    public double getDet2() {
+    private double getDet2() {
         if (elements.length != elements[0].length) {
             throw new IllegalArgumentException("Can't count det");
         }
         return elements[0][0] * elements[1][1] - elements[1][0] * elements[1][1];
     }
 
-  /*  public double getDet() {
+   public double getDet() {
         if (elements.length != elements[0].length) {
             throw new IllegalArgumentException("Can't count det");
         } else if (elements.length == 3) {
@@ -114,15 +135,13 @@ public class Matrix {
     }*/
 
     public Matrix getSum(Matrix matrix) {
-        if (elements.length < matrix.elements.length || elements[0].length < matrix.elements[0].length) {
-            double[][] newArray = new double[matrix.elements.length][matrix.elements[0].length];
-            System.arraycopy(elements, 0, newArray, 0, elements.length);
-            System.arraycopy(elements[0], 0, newArray[0], 0, elements[0].length);
-            elements = newArray;
+        if (vectors.length < matrix.vectors.length || vectors[0].getSize() < matrix.vectors[0].getSize()) {
+            throw new IllegalArgumentException("Matrix are not equals");
         }
-        for (int i = 0; i < matrix.elements.length; i++) {
-            for (int j = 0; j < matrix.elements[0].length; j++) {
-                elements[i][j] = (elements[i][j] + matrix.elements[i][j]);
+        for (int i = 0; i < matrix.vectors.length; i++) {
+            for (int j = 0; j < matrix.vectors[0].getSize(); j++) {
+
+                vectors[i].setElement(j, vectors[i].getElement(j) + matrix.vectors[i].getElement(j));
             }
         }
         return this;
@@ -130,27 +149,28 @@ public class Matrix {
     }
 
     public Matrix getDifference(Matrix matrix) {
-        if (elements.length < matrix.elements.length || elements[0].length < matrix.elements[0].length) {
-            double[][] newArray = new double[matrix.elements.length][matrix.elements[0].length];
-            System.arraycopy(elements, 0, newArray, 0, elements.length);
-            System.arraycopy(elements[0], 0, newArray[0], 0, elements[0].length);
-            elements = newArray;
+        if (vectors.length < matrix.vectors.length || vectors[0].getSize() < matrix.vectors[0].getSize()) {
+            throw new IllegalArgumentException("Matrix are not equals");
         }
-        for (int i = 0; i < matrix.elements.length; i++) {
-            for (int j = 0; j < matrix.elements[0].length; j++) {
-                elements[i][j] = (elements[i][j] - matrix.elements[i][j]);
+        for (int i = 0; i < matrix.vectors.length; i++) {
+            for (int j = 0; j < matrix.vectors[0].getSize(); j++) {
+
+                vectors[i].setElement(j, vectors[i].getElement(j) - matrix.vectors[i].getElement(j));
             }
         }
         return this;
     }
 
     public Matrix vectorMultiplication(Vector vector) {
-        if (elements[0].length != 1) {
+        if (vectors[0].getSize() != 1) {
             throw new IllegalArgumentException("Can't multiply");
         }
-        for (int i = 0; i < elements.length; i++) {
-            for (int j = 0; j < elements.length; j++) {
-                elements[i][j] = elements[i][j] * vector.getElement(i);
+
+
+        for (int i = 0; i < vectors.length; i++) {
+            for (int j = 0; j < vectors.length; j++) {
+                // elements[i][j] = elements[i][j] * vector.getElement(i);
+                vectors[i].setElement(j, vectors[i].getElement(0) * vector.getElement(i));
             }
         }
         return this;
@@ -165,28 +185,31 @@ public class Matrix {
         return new Matrix(matrix1).getDifference(matrix2);
     }
 
-    public static double[][] getMultiplication(Matrix matrix1, Matrix matrix2) {
-        if (matrix1.elements[0].length != matrix2.elements.length) {
+    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.vectors[0].getSize() != matrix2.vectors.length) {
             throw new IllegalArgumentException("Can't multiply");
         }
+        Matrix matrix = new Matrix(matrix1.vectors.length, matrix2.vectors[0].getSize());
 
-        double[][] result = new double[matrix1.elements.length][matrix2.elements[0].length];
-        for (int i = 0; i < matrix1.elements.length; i++) {
-            for (int j = 0; j < matrix2.elements[0].length; j++) {
-                for (int k = 0; k < matrix2.elements.length; k++) {
-                    result[i][j] = matrix1.elements[i][k] * matrix2.elements[k][j];
+        for (int i = 0; i < matrix1.vectors.length; i++) {
+            for (int j = 0; j < matrix2.vectors[0].getSize(); j++) {
+                if (i != matrix1.vectors.length - 1) {
+                    matrix.setElement(i, j, matrix1.vectors[i].getElement(i) * matrix2.vectors[i].getElement(j) +
+                            matrix1.vectors[i + 1].getElement(i + 1) * matrix2.vectors[i + 1].getElement(j));
+                } else {
+                    matrix.setElement(i, j, matrix1.vectors[i - 1].getElement(i - 1) * matrix2.vectors[i - 1].getElement(j) +
+                            matrix1.vectors[i].getElement(i) * matrix2.vectors[i].getElement(j));
                 }
-
             }
         }
-        return result;
+        return matrix;
     }
 
-   /* @Override
+    @Override
     public String toString() {
 
-        return "{" + Arrays.toString(elements) + "}";
-    }*/
+        return "{" + Arrays.toString(vectors) + "}";
+    }
 
 
 }
