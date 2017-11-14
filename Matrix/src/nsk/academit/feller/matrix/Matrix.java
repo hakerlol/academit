@@ -78,61 +78,80 @@ public class Matrix {
         return new Vector(vectors.length, array);
     }
 
-   /* public double[][] getTransposition() {
-        double[][] array = new double[elements[0].length][elements.length];
+    public Matrix getTransposition() {
+        Matrix matrix = new Matrix(getRowLength(), getColumnLength());
+       for(int i = 0; i < getColumnLength(); i++){
+           for(int j = 0; j < getRowLength(); j++){
+               matrix.setElement(j,i, this.getElement(i,j));
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[0].length; j++) {
-                array[i][j] = elements[j][i];
-            }
-        }
-
-        return array;
-    }*/
+           }
+       }
+        return matrix;
+    }
 
     public Matrix calcScalar(double number) {
         for (int i = 0; i < this.vectors.length; i++) {
             for (int j = 0; j < this.vectors[0].getSize(); j++) {
-                // elements[i][j] = (elements[i][j] * number);
                 vectors[i].setElement(j, vectors[i].getElement(j) * number);
             }
         }
         return this;
     }
-
-   /* private double getDet3() {
-        if (vectors.length != vectors[0].getSize()) {
-            throw new IllegalArgumentException("Can't count det");
+    public Matrix getShortMatrix(int rowIndex, int columnIndex){
+        if(rowIndex > getRowLength() || columnIndex > getColumnLength()){
+            throw new IllegalArgumentException("Such index doesn't exist;");
         }
-        return elements[0][0] * elements[1][1] * elements[2][2] + elements[0][1] * elements[1][2] * elements[2][0] + elements[1][0] * elements[2][1] * elements[0][2] -
-                elements[2][0] * elements[1][1] * elements[0][2] - elements[0][1] * elements[1][0] * elements[2][2] - elements[0][0] * elements[1][2] * elements[2][1];
-    }
-
-    private double getDet2() {
-        if (elements.length != elements[0].length) {
-            throw new IllegalArgumentException("Can't count det");
+        if(getColumnLength() != getRowLength()){
+            throw new IllegalArgumentException("impossible find det");
         }
-        return elements[0][0] * elements[1][1] - elements[1][0] * elements[1][1];
-    }
-
-   public double getDet() {
-        if (elements.length != elements[0].length) {
-            throw new IllegalArgumentException("Can't count det");
-        } else if (elements.length == 3) {
-            return getDet3();
-        } else if (elements.length == 2) {
-            return getDet2();
-        } else if (elements.length == 1) {
-            return elements[0][0];
-        } else {
-            double determine = 0;
-            for(int i = elements.length - 1; i == 3; i--){
-                for(int j = elements.length - 1; j == 3; j--){
-                    determine = elements[i][j]*
+        int offRow = 0;
+        int offColumn = 0;
+        Matrix matrix = new Matrix(getColumnLength() - 1, getRowLength() - 1);
+        for(int i = 0; i < getColumnLength(); i++) {
+            offColumn=0;
+            for (int j = 0; j < getRowLength(); j++) {
+                if (i == rowIndex){
+                    offRow = 1;
+                    break;
+                }if(j == columnIndex){
+                    offColumn = 1;
+                }else {
+                    matrix.setElement(i - offRow,j-offColumn,getElement(i,j));
                 }
             }
         }
-    }*/
+        return matrix;
+}
+    public double getMinor(Matrix matrix){
+        double Minor = 0;
+
+
+
+        return Minor;
+    }
+
+   /* public double getAddition(){
+
+        double Addition;
+        for(int i = 0; i < getColumnLength(); i++){
+            for(int j = 0; j < getRowLength(); j++){
+                Addition = Math.pow(-1,i+j)*;
+
+            }
+        return 0;
+    }
+
+
+   public double getDet() {
+       double Det;
+       for (int i = 0; i < getColumnLength(); i++) {
+           for (int j = 0; j < getRowLength(); j++) {
+               Det += getElement(i, j) ;
+
+           }
+           return Det;
+       }
+   }*/
 
     public Matrix getSum(Matrix matrix) {
         if (vectors.length < matrix.vectors.length || vectors[0].getSize() < matrix.vectors[0].getSize()) {

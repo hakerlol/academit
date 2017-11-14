@@ -18,12 +18,16 @@ public class Main {
         double[] array3 = new double[]{1, 2};
         double[] array4 = new double[]{-1, -2, 3, 5};
         double[] array5 = new double[]{0, 0, 3, 5};
+        double[] array6 = new double[]{1, 8, 4, 2};
+        double[] array7 = new double[]{3, 7, 5, 4};
         Vector vector1 = new Vector(array2);
         Vector vector2 = new Vector(array3);
         Vector vector3 = new Vector(array4);
         Vector vector4 = new Vector(array5);
+        Vector vector5 = new Vector(array6);
+        Vector vector6 = new Vector(array7);
         Vector[] vectors = new Vector[]{vector1,vector2};
-        Vector[] vectors2 = new Vector[]{vector3,vector4};
+        Vector[] vectors2 = new Vector[]{vector3,vector4, vector5, vector6};
         Matrix matrix = new Matrix(3, 4);
         Matrix matrix1 = new Matrix(matrix);
         Matrix matrix2 = new Matrix(array);
@@ -32,10 +36,13 @@ public class Main {
 
       //  System.out.println(matrix);
       //  System.out.println(matrix2);
-      //  System.out.println(matrix3);
-      //  System.out.println(matrix3.getDifference(matrix4));
-      //  System.out.println(matrix2.vectorMultiplication(vector1));
-        System.out.println(getMultiplication(matrix3, matrix4));
+        System.out.println(matrix4);
+       // System.out.println(matrix3.getDifference(matrix4));
+      // System.out.println(matrix2.vectorMultiplication(vector1));
+      //  System.out.println(getMultiplication(matrix3, matrix4));
+      //  System.out.println(matrix4.toString());
+       // System.out.println(matrix4.getTransposition());
+        System.out.println(matrix4.getMinor(1,2));
 
 
     }
