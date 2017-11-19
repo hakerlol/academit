@@ -14,8 +14,8 @@ public class Main {
                 array[i][j] = i + j;
             }
         }
-        double[] array2 = new double[]{1, 2};
-        double[] array3 = new double[]{1, 2};
+        double[] array2 = new double[]{1, 3};
+        double[] array3 = new double[]{5, 8};
         double[] array4 = new double[]{-1, -2, 3, 5};
         double[] array5 = new double[]{0, 0, 3, 5};
         double[] array6 = new double[]{1, 8, 4, 2};
@@ -42,7 +42,8 @@ public class Main {
       //  System.out.println(getMultiplication(matrix3, matrix4));
       //  System.out.println(matrix4.toString());
        // System.out.println(matrix4.getTransposition());
-        System.out.println(matrix4.getMinor(1,2));
+        System.out.println(matrix4.getDet());
+     //   System.out.println(matrix4.getShortMatrix(0,3));
 
 
     }

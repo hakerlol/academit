@@ -80,12 +80,12 @@ public class Matrix {
 
     public Matrix getTransposition() {
         Matrix matrix = new Matrix(getRowLength(), getColumnLength());
-       for(int i = 0; i < getColumnLength(); i++){
-           for(int j = 0; j < getRowLength(); j++){
-               matrix.setElement(j,i, this.getElement(i,j));
+        for (int i = 0; i < getColumnLength(); i++) {
+            for (int j = 0; j < getRowLength(); j++) {
+                matrix.setElement(j, i, this.getElement(i, j));
 
-           }
-       }
+            }
+        }
         return matrix;
     }
 
@@ -97,61 +97,56 @@ public class Matrix {
         }
         return this;
     }
-    public Matrix getShortMatrix(int rowIndex, int columnIndex){
-        if(rowIndex > getRowLength() || columnIndex > getColumnLength()){
+
+    public Matrix getShortMatrix(int rowIndex, int columnIndex) {
+        if (rowIndex > getRowLength() || columnIndex > getColumnLength()) {
             throw new IllegalArgumentException("Such index doesn't exist;");
         }
-        if(getColumnLength() != getRowLength()){
+        if (getColumnLength() != getRowLength()) {
             throw new IllegalArgumentException("impossible find det");
         }
         int offRow = 0;
         int offColumn = 0;
         Matrix matrix = new Matrix(getColumnLength() - 1, getRowLength() - 1);
-        for(int i = 0; i < getColumnLength(); i++) {
-            offColumn=0;
+        for (int i = 0; i < getColumnLength(); i++) {
+            offColumn = 0;
             for (int j = 0; j < getRowLength(); j++) {
-                if (i == rowIndex){
+                if (i == rowIndex) {
                     offRow = 1;
                     break;
-                }if(j == columnIndex){
+                }
+                if (j == columnIndex) {
                     offColumn = 1;
-                }else {
-                    matrix.setElement(i - offRow,j-offColumn,getElement(i,j));
+                } else {
+                    matrix.setElement(i - offRow, j - offColumn, getElement(i, j));
                 }
             }
         }
         return matrix;
-}
-    public double getMinor(Matrix matrix){
-        double Minor = 0;
-
-
-
-        return Minor;
     }
 
-   /* public double getAddition(){
+    public double getDet() {
+        double det = 0;
+        int Degree = 1;
+        if (this.getRowLength() != this.getColumnLength()) {
+            throw new IllegalArgumentException("impossible find det");
+        }
+        if (this.getColumnLength() == 1) {
+            return this.getElement(0, 0);
+        } else if (this.getColumnLength() == 2) {
+            return this.getElement(0, 0) * this.getElement(1, 1) - this.getElement(0, 1) * this.getElement(1, 0);
+        } else {
+            for (int j = 0; j < this.getColumnLength(); j++) {
 
-        double Addition;
-        for(int i = 0; i < getColumnLength(); i++){
-            for(int j = 0; j < getRowLength(); j++){
-                Addition = Math.pow(-1,i+j)*;
+                Matrix matrix1 = getShortMatrix(0, getColumnLength() - 1);
+                det = det + (Degree * this.getElement(0, j) * matrix1.getDet());
+                Degree = -Degree;
 
             }
-        return 0;
+        }
+        return det;
     }
 
-
-   public double getDet() {
-       double Det;
-       for (int i = 0; i < getColumnLength(); i++) {
-           for (int j = 0; j < getRowLength(); j++) {
-               Det += getElement(i, j) ;
-
-           }
-           return Det;
-       }
-   }*/
 
     public Matrix getSum(Matrix matrix) {
         if (vectors.length < matrix.vectors.length || vectors[0].getSize() < matrix.vectors[0].getSize()) {
