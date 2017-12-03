@@ -9,73 +9,31 @@ import java.util.Scanner;
 
 public class CSV {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        if (args.length == 2) {
 
-            try (Scanner scanner = new Scanner(new FileInputStream(args[0])); PrintWriter writer = new PrintWriter(args[1])) {
+        try (Scanner scanner = new Scanner(new FileInputStream("table.txt")); PrintWriter writer = new PrintWriter("output.html")) {
 
-
-                ArrayList<String> arrayList = new ArrayList<>();
-                while (scanner.hasNext()) {
-                    arrayList.add(scanner.nextLine());
-                }
-
-                boolean inQuotes = false;
-                StringBuilder tableHtml = new StringBuilder();
-                for (String line : arrayList) {
-                    if (!inQuotes) {
-                        tableHtml.append("<tr><td>");
-                    }
-
-                    for (int i = 0; i < line.length(); i++) {
-                        char c = line.charAt(i);
-
-                        if (c == '<') {
-                            tableHtml.append("&lt;");
-                        } else if (c == '>') {
-                            tableHtml.append("&gt;");
-                        } else if (c == '&') {
-                            tableHtml.append("&amp;");
-                        } else if (inQuotes) {
-                            if (i == line.length() - 1 && c != '"') {
-                                tableHtml.append(c).append("<br>");
-                            } else if (c != '"') {
-                                tableHtml.append(c);
-                            } else if (i != line.length() - 1 && line.charAt(i + 1) == '"') {
-                                tableHtml.append(c);
-                                i += 1;
-                            } else {
-                                inQuotes = false;
-                            }
-                        } else {
-                            if (i == 0 && i == line.length() - 1 && c == ',') {
-                                break;
-                            } else if (c == ',') {
-                                tableHtml.append("</td><td>");
-                            } else if (c != '"') {
-                                tableHtml.append(c);
-                            } else {
-                                inQuotes = true;
-                            }
-                        }
-                    }
-                    if (!inQuotes) {
-                        tableHtml.append("</td></tr>");
-                    }
-                }
-
-                String header = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"/><title>Таблица</title></head><body><table border=\"3\">";
-                String end = "</table></body></html>";
-                writer.print(header);
-                writer.print(tableHtml);
-                writer.print(end);
-
-            } catch (FileNotFoundException e) {
-                System.out.println("Файл не найден");
-
+            ArrayList<String> arrayList = new ArrayList<>();
+            ArrayList<String> newArrayList = new ArrayList<>();
+            while (scanner.hasNext()) {
+                arrayList.add("<td>" + scanner.nextLine() + "</td>");
+                arrayList.add("</tr>");
             }
-        } else {
-            System.out.printf("%s%n%s%n%s%n%", "Неверное количество аргументов, проверьте вводимые аргументы",
-                    "Первый аргумент - имя файла в формате .txt, в котором лежит исходная таблица", "Второй аргумент - имя файла в формате .html");
+            for (String x : arrayList) {
+                for (String z : TestLines.Test(x)) {
+                    newArrayList.add("<td>" + z + "</td>");
+                }
+            }
+            String header = "<!DOCTYPE html><html><head><meta charset = \"UTF-8\"/><title>Таблица</title></head><body><table border =\"3\"><tr>";
+            String end = "</table></body></html>";
+            writer.print(header);
+
+            for (String x : newArrayList) {
+                writer.println(x);
+            }
+            writer.print(end);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден");
         }
     }
 }
